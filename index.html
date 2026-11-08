@@ -1,0 +1,261 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>BINA Validated Prototype</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: one calm column. Two app panels first (what you came to open), then the SALAM walkthrough, the honest status ledger, files. */
+@font-face{font-family:"Noto Sans Arabic";src:url("shared/fonts/NotoSansArabic-Variable.woff2") format("woff2");font-weight:100 900;font-display:swap}
+:root{
+  --teal:#009B96; --deep:#062B2B; --amber:#F2A93B; --green:#2FBF71; --danger:#B23B30;
+  --bg:#F5F1E8; --card:#FFFDFA; --ink:#062B2B; --ink2:#315252; --rule:#D8E3DF; --chip:#EAF1EE; --tealtext:#00756F; --hover:#EEF3F0;
+  --band:#062B2B; --bandink:#F5F1E8; --shadow:0 1px 2px rgba(6,43,43,.06),0 10px 28px -16px rgba(6,43,43,.28);
+  --sans:"Noto Sans Arabic","Segoe UI",Tahoma,system-ui,sans-serif; --mono:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#082F2F;--card:#0E3B3B;--ink:#F5F1E8;--ink2:#A9C9C2;--rule:#1E4B4A;--chip:#164645;--tealtext:#5FD3CC;--hover:#134443;--band:#041F1F;--bandink:#F5F1E8;--shadow:0 10px 28px -16px rgba(0,0,0,.6);color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#082F2F;--card:#0E3B3B;--ink:#F5F1E8;--ink2:#A9C9C2;--rule:#1E4B4A;--chip:#164645;--tealtext:#5FD3CC;--hover:#134443;--band:#041F1F;--bandink:#F5F1E8;--shadow:0 10px 28px -16px rgba(0,0,0,.6);color-scheme:dark}
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink)}
+body{font-family:var(--sans);font-size:15px;line-height:1.6;margin:0}
+.band{background:var(--band);color:var(--bandink)}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header .wrap{display:flex;align-items:center;gap:16px;padding-block:18px;flex-wrap:wrap}
+header img{height:34px;width:auto}
+header .t{display:flex;flex-direction:column;min-width:0}
+header h1{margin:0;font-size:20px;font-weight:800;letter-spacing:.01em}
+header p{margin:0;font-size:13px;opacity:.8}
+header .sp{flex:1}
+.pill{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:4px 12px;font-size:12px;font-weight:700;letter-spacing:.06em}
+.pill.demo{background:var(--amber);color:#062B2B}
+.lang{background:transparent;border:1px solid rgba(245,241,232,.4);color:var(--bandink);border-radius:999px;padding:6px 14px;font:600 13px var(--sans);cursor:pointer;min-height:36px}
+.lang:focus-visible,a:focus-visible,button:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+main .wrap{display:flex;flex-direction:column;gap:40px;padding-block:32px 56px}
+h2{font-size:19px;margin:0 0 4px;font-weight:800;text-wrap:balance}
+.lede{margin:0;color:var(--ink2);max-width:68ch}
+.apps{display:grid;grid-template-columns:1.55fr 1fr;gap:20px}
+.app{background:var(--card);border:1px solid var(--rule);border-radius:20px;box-shadow:var(--shadow);display:flex;flex-direction:column;overflow:hidden;min-width:0}
+.app .shot{background:var(--chip);aspect-ratio:16/10;display:grid;place-items:center;overflow:hidden}
+.app.cust .shot{aspect-ratio:16/10}
+.app .shot img{width:100%;height:100%;object-fit:cover;object-position:top}
+.app.cust .shot img{object-fit:contain;padding-top:12px}
+.app .body{padding:18px 20px 20px;display:flex;flex-direction:column;gap:10px;flex:1}
+.app h3{margin:0;font-size:17px;font-weight:800}
+.app p{margin:0;color:var(--ink2);font-size:14px}
+.app .file{font:12px var(--mono);color:var(--ink2);word-break:break-all}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:12px;padding:10px 18px;font:700 14px var(--sans);text-decoration:none;cursor:pointer;border:1px solid transparent;min-height:44px}
+.btn.primary{background:var(--teal);color:#fff}
+.btn.primary:hover{background:#00847F}
+.btn.ghost{background:transparent;border-color:var(--rule);color:var(--ink)}
+.btn.ghost:hover{background:var(--hover)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:auto}
+.path{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:14px;padding:0;list-style:none;counter-reset:s}
+.path li{background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:12px 14px 12px;display:flex;gap:12px;align-items:flex-start;min-width:0}
+.path li::before{counter-increment:s;content:counter(s);flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--chip);color:var(--tealtext);font-weight:800;font-size:13px;font-variant-numeric:tabular-nums}
+.path b{display:block;font-size:14px}
+.path span{font-size:13px;color:var(--ink2)}
+.where{display:inline-block;font:700 10px var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--tealtext);margin-bottom:2px}
+.tablebox{overflow-x:auto;background:var(--card);border:1px solid var(--rule);border-radius:16px;margin-top:14px}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:14px}
+th,td{text-align:start;padding:11px 14px;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink2);font-weight:700;background:var(--hover)}
+tr:last-child td{border-bottom:0}
+.st{display:inline-block;border-radius:999px;padding:2px 10px;font-size:12px;font-weight:700;white-space:nowrap}
+.st.real{background:rgba(47,191,113,.16);color:var(--tealtext)}
+.st.sim{background:rgba(242,169,59,.22);color:inherit}
+.st.block{background:rgba(178,59,48,.14);color:inherit}
+.files{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
+.f{background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.f b{font-size:14px}
+.f code{font:12px var(--mono);color:var(--ink2);word-break:break-all}
+.f button{align-self:flex-start;margin-top:6px}
+.note{font-size:13px;color:var(--ink2)}
+footer{border-top:1px solid var(--rule)}
+footer .wrap{display:flex;gap:14px;flex-wrap:wrap;align-items:center;padding-block:18px;font-size:13px;color:var(--ink2)}
+footer .sp{flex:1}
+#toast{position:fixed;inset-inline:0;bottom:calc(16px + env(safe-area-inset-bottom,0px));display:flex;justify-content:center;pointer-events:none}
+#toast span{background:var(--deep);color:#F5F1E8;border-radius:12px;padding:10px 16px;font-size:14px;box-shadow:var(--shadow);opacity:0;transition:opacity .2s}
+#toast span.on{opacity:1}
+.dlg{position:fixed;inset:0;background:rgba(6,43,43,.5);display:grid;place-items:center;padding:16px}
+.dlg div{background:var(--card);color:var(--ink);border-radius:16px;padding:20px;max-width:420px;display:flex;flex-direction:column;gap:12px}
+.dlg p{margin:0}
+@media (max-width:900px){.apps{grid-template-columns:1fr}.path,.files{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.path,.files{grid-template-columns:1fr}header h1{font-size:18px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<header class="band">
+  <div class="wrap">
+    <img id="logo" src="shared/brand/bina-logo-white.png" alt="BINA">
+    <div class="t">
+      <h1 data-ar="نموذج بينا: لوحة التحكم وتطبيق المستخدم" data-en="BINA prototype: Admin and Customer">BINA prototype: Admin and Customer</h1>
+      <p data-ar="معنى أساسي واحد، ملفّان مستقلان للتدفقين، وكتالوج تجريبي واحد مشترك" data-en="One Core Meaning, two independent flow profiles, one shared demo catalogue">One Core Meaning, two independent flow profiles, one shared demo catalogue</p>
+    </div>
+    <span class="sp"></span>
+    <span class="pill demo">DEMO</span>
+    <button class="lang" id="lang" type="button" aria-label="Switch language">العربية</button>
+  </div>
+</header>
+
+<main>
+<div class="wrap">
+
+  <section aria-labelledby="h-apps">
+    <h2 id="h-apps" data-ar="افتح التطبيقين" data-en="Open the two apps">Open the two apps</h2>
+    <p class="lede" data-ar="الاثنان يقرآن نفس الكتالوج في هذا المتصفح. أي تعديل أو استيراد في لوحة التحكم يظهر مباشرة في تطبيق المستخدم." data-en="Both read the same catalogue in this browser. Any edit or Excel import in the Admin shows up in the Customer app right away.">Both read the same catalogue in this browser. Any edit or Excel import in the Admin shows up in the Customer app right away.</p>
+    <div class="apps" style="margin-top:16px">
+      <article class="app">
+        <div class="shot"><img id="shot-admin" src="docs/img/admin.webp" alt="BINA Admin v5 overview screen" loading="lazy"></div>
+        <div class="body">
+          <h3 data-ar="لوحة التحكم (معتمدة ومحدّثة)" data-en="Admin, validated">Admin, validated</h3>
+          <p data-ar="نفس لوحة التحكم المعتمدة، ومعها: المعاني الأساسية، التدفقان داخل كل معنى، الربط الدلالي، الوسائط والمراجعة، وإدارة Excel." data-en="The same approved Admin, now with Core Meanings, both flows inside each meaning, semantic mapping, media and review, and Excel management.">The same approved Admin, now with Core Meanings, both flows inside each meaning, semantic mapping, media and review, and Excel management.</p>
+          <span class="file">BINA_Admin_VALIDATED_v5.html</span>
+          <div class="row"><a class="btn primary" href="BINA_Admin_VALIDATED_v5.html" data-ar="فتح لوحة التحكم" data-en="Open Admin">Open Admin</a></div>
+        </div>
+      </article>
+      <article class="app cust">
+        <div class="shot"><img id="shot-cust" src="docs/img/customer.webp" alt="BINA Customer v3 Flow 2 screen" loading="lazy"></div>
+        <div class="body">
+          <h3 data-ar="تطبيق المستخدم (معتمد ومحدّث)" data-en="Customer app, validated">Customer app, validated</h3>
+          <p data-ar="نفس تطبيق المستخدم المعتمد، متصل الآن بنفس المعاني: إشارة إلى صوت بالعربي والإنجليزي، وصوت إلى أفاتار. مرجع واجهة لتطبيق Flutter." data-en="The same approved app, now connected to the same meanings: sign to speech in Arabic and English, speech to avatar. UI reference for the Flutter app.">The same approved app, now connected to the same meanings: sign to speech in Arabic and English, speech to avatar. UI reference for the Flutter app.</p>
+          <span class="file">BINA_User_VALIDATED_v3.html</span>
+          <div class="row"><a class="btn primary" href="BINA_User_VALIDATED_v3.html" data-ar="فتح تطبيق المستخدم" data-en="Open Customer">Open Customer</a></div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-path">
+    <h2 id="h-path" data-ar="جرّب المسار الكامل: السلام عليكم" data-en="Try the full path: SALAM">Try the full path: SALAM</h2>
+    <p class="lede" data-ar="نفس المعرّف SALAM في كل خطوة، في لوحة التحكم وفي التطبيق، ولا نسخة ثانية بعد الاستيراد." data-en="The same ID, SALAM, at every step, in the Admin and in the app, and no second copy after an import.">The same ID, SALAM, at every step, in the Admin and in the app, and no second copy after an import.</p>
+    <ol class="path">
+      <li><div><span class="where">Admin</span><b data-ar="افتح SALAM" data-en="Open SALAM">Open SALAM</b><span data-ar="المعاني الأساسية ثم SALAM: الهوية والتدفقان في مكان واحد." data-en="Core Meanings, then SALAM: identity and both flows in one place.">Core Meanings, then SALAM: identity and both flows in one place.</span></div></li>
+      <li><div><span class="where">Admin</span><b data-ar="التدفق الأول" data-en="Flow 1">Flow 1</b><span data-ar="شغّل الصوت العربي ثم الإنجليزي، وعدّل فئة الرؤية (CV class)." data-en="Play the Arabic and English audio, edit the CV class.">Play the Arabic and English audio, edit the CV class.</span></div></li>
+      <li><div><span class="where">Admin</span><b data-ar="التدفق الثاني" data-en="Flow 2">Flow 2</b><span data-ar="أضف تلميحًا دلاليًا واعرض مقطع الأفاتار." data-en="Add a semantic hint and preview the avatar clip.">Add a semantic hint and preview the avatar clip.</span></div></li>
+      <li><div><span class="where">Admin · Excel</span><b data-ar="صدّر ثم عدّل" data-en="Export, then edit">Export, then edit</b><span data-ar="نزّل ملف Excel وعدّله في برنامج Excel." data-en="Download the workbook and change it in Excel.">Download the workbook and change it in Excel.</span></div></li>
+      <li><div><span class="where">Admin · Excel</span><b data-ar="استورد وراجع الفروقات" data-en="Import and review the diff">Import and review the diff</b><span data-ar="عدّل الصفوف المتعارضة ثم احفظ." data-en="Fix the conflicting rows, then commit.">Fix the conflicting rows, then commit.</span></div></li>
+      <li><div><span class="where">Customer</span><b data-ar="نفس المعنى في التطبيق" data-en="Same meaning in the app">Same meaning in the app</b><span data-ar="التدفق الأول بالعربي والإنجليزي، والتدفق الثاني يفهم التلميح الجديد ويعرض نفس الأفاتار." data-en="Flow 1 in Arabic and English; Flow 2 understands the new hint and plays the same avatar.">Flow 1 in Arabic and English; Flow 2 understands the new hint and plays the same avatar.</span></div></li>
+    </ol>
+  </section>
+
+  <section aria-labelledby="h-status">
+    <h2 id="h-status" data-ar="ما الحقيقي وما المحاكى" data-en="What is real and what is simulated">What is real and what is simulated</h2>
+    <p class="lede" data-ar="لا شيء هنا يظهر كأنه متصل وهو غير متصل." data-en="Nothing here claims to be connected when it is not.">Nothing here claims to be connected when it is not.</p>
+    <div class="tablebox">
+      <table>
+        <thead><tr><th data-ar="الجزء" data-en="Part">Part</th><th data-ar="الحالة" data-en="Status">Status</th><th data-ar="التفاصيل" data-en="Details">Details</th></tr></thead>
+        <tbody id="ledger"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-files">
+    <h2 id="h-files" data-ar="الملفات" data-en="Files">Files</h2>
+    <p class="lede" data-ar="قوالب Excel وأمثلة البيانات والعقود." data-en="Excel workbooks, data examples and contracts.">Excel workbooks, data examples and contracts.</p>
+    <div class="files" id="files"></div>
+  </section>
+
+</div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span id="meta">…</span>
+    <span class="sp"></span>
+    <button class="btn ghost" id="reset" type="button" data-ar="إعادة البيانات التجريبية" data-en="Reset demo data">Reset demo data</button>
+  </div>
+</footer>
+<div id="toast" aria-live="polite"><span></span></div>
+
+<script charset="utf-8" src="shared/bina-core.js"></script>
+<script charset="utf-8" src="shared/bina-data.js"></script>
+<script charset="utf-8" src="shared/bina-store.js"></script>
+<script charset="utf-8" src="shared/bina-providers.js"></script>
+<script>
+(function () {
+  'use strict';
+  var KEY = 'bina.launcher.ui.v1';
+  var lang = 'en';
+  try { lang = (JSON.parse(localStorage.getItem(KEY) || '{}').lang) || 'en'; } catch (e) { }
+  var LEDGER = [
+    ['Core Meaning model, validation, readiness', 'real', 'Shared logic in shared/bina-core.js, used by Admin, Customer, the reference Worker and the tests.', 'منطق مشترك في shared/bina-core.js تستخدمه لوحة التحكم وتطبيق المستخدم والـ Worker والاختبارات.', 'نموذج المعنى الأساسي والتحقق والجاهزية'],
+    ['Excel import and export', 'real', 'Real .xlsx read and write (ExcelJS), preview, diff, conflicts, commit, no duplicates.', 'قراءة وكتابة xlsx حقيقية، معاينة، فروقات، تعارضات، حفظ، بدون تكرار.', 'استيراد وتصدير Excel'],
+    ['Flow 1 recognition (camera to meaning)', 'sim', 'The CV model is not part of this build. A labelled control simulates the recognised class.', 'نموذج الرؤية غير موجود في هذا البناء. زر واضح يحاكي الفئة المتعرّف عليها.', 'التعرف في التدفق الأول'],
+    ['Flow 1 audio', 'sim', 'Synthetic espeak-ng voice, flagged MOCK_AUDIO. No approved BINA recordings were found.', 'صوت اصطناعي، مُعلَّم MOCK_AUDIO. لا توجد تسجيلات معتمدة.', 'صوت التدفق الأول'],
+    ['Flow 2 understanding', 'sim', 'Deterministic matcher labelled SIMULATED. Live mode calls the Worker, which calls OpenAI and validates the ID.', 'مطابق محدد الخطوات مُعلَّم SIMULATED. الوضع الحي يمر عبر الـ Worker ثم OpenAI ثم تحقق بينا.', 'فهم التدفق الثاني'],
+    ['Flow 2 avatar clips', 'real', '15 verified TalkBIM reference clips (5 Saudi, 10 Malaysian), demo only, not production approved. Meanings without a verified clip have no avatar.', '15 مقطعًا مرجعيًا موثّقًا من TalkBIM (5 سعودية و10 ماليزية) للتجربة فقط. المعاني بدون مقطع موثّق لا تعرض أفاتار.', 'مقاطع الأفاتار'],
+    ['Customer sign-in', 'sim', 'Mock accounts in this browser. The Firebase Authentication adapter is built in and switches on with the project config.', 'حسابات تجريبية في هذا المتصفح. محوّل Firebase جاهز ويعمل بإعدادات المشروع.', 'دخول المستخدم'],
+    ['Data and integration', 'real', 'Served by the Worker (wrangler dev): Admin and app share D1 through API v1. Opened from this page or a file: a local demo copy in the browser.', 'عند التشغيل عبر الـ Worker (wrangler dev): لوحة التحكم والتطبيق يتشاركان D1 عبر API v1. عند الفتح من هنا أو كملف: نسخة تجريبية محلية في المتصفح.', 'البيانات والتكامل'],
+    ['Admin protection (Cloudflare Access)', 'block', 'JWT verification is implemented and tested in the Worker; needs the team domain and AUD to run.', 'التحقق مبني ومختبر في الـ Worker، ويحتاج نطاق الفريق وقيمة AUD للتشغيل.', 'حماية لوحة التحكم'],
+    ['Watch', 'block', 'MP4 does not play on the watch. Conversion to 15 fps JPEG packs is measured; real playback needs the hardware.', 'ملفات MP4 لا تعمل على الساعة. تم قياس التحويل لحزم JPEG بسرعة 15 إطارًا، والتشغيل الفعلي يحتاج الجهاز.', 'الساعة']
+  ];
+  var FILES = [
+    ['prototype_data/excel/BINA_Content_Catalogue_DEMO.xlsx', 'DEMO workbook', 'ملف Excel التجريبي', 'demo'],
+    ['prototype_data/excel/BINA_Content_Catalogue_Template.xlsx', 'Empty template', 'قالب فارغ', 'tpl'],
+    ['prototype_data/bina_demo_catalogue.json', 'Demo catalogue (JSON)', 'الكتالوج التجريبي (JSON)'],
+    ['prototype_data/csv/Flow2_Speech_to_Sign.csv', 'Flow 2 sheet (CSV)', 'ورقة التدفق الثاني (CSV)'],
+    ['docs/API_V1.md', 'API v1 contract', 'عقد API v1'],
+    ['docs/FINAL_VALIDATION_REPORT.md', 'Validation report', 'تقرير التحقق والتكامل']
+  ];
+  var STATUS = { real: ['Real', 'حقيقي'], sim: ['Simulated', 'محاكاة'], block: ['Needs setup', 'يحتاج إعداد'] };
+  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function t(en, ar) { return lang === 'ar' ? ar : en; }
+  function toast(msg) { var s = document.querySelector('#toast span'); s.textContent = msg; s.classList.add('on'); clearTimeout(toast.h); toast.h = setTimeout(function () { s.classList.remove('on'); }, 2600); }
+  function render() {
+    document.documentElement.lang = lang; document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    document.querySelectorAll('[data-en]').forEach(function (el) { el.textContent = el.getAttribute('data-' + lang); });
+    document.getElementById('lang').textContent = lang === 'ar' ? 'English' : 'العربية';
+    document.getElementById('ledger').innerHTML = LEDGER.map(function (r) {
+      return '<tr><td><b>' + esc(t(r[0], r[4])) + '</b></td><td><span class="st ' + r[1] + '">' + esc(t(STATUS[r[1]][0], STATUS[r[1]][1])) + '</span></td><td>' + esc(t(r[2], r[3])) + '</td></tr>';
+    }).join('');
+    document.getElementById('files').innerHTML = FILES.map(function (f, i) {
+      return '<div class="f"><b>' + esc(t(f[1], f[2])) + '</b><code>' + esc(f[0]) + '</code><button class="btn ghost" type="button" data-i="' + i + '">' + esc(t('Download', 'تنزيل')) + '</button></div>';
+    }).join('');
+    meta();
+  }
+  function meta() {
+    var s = window.BinaStore ? BinaStore.state() : null, m = s ? BinaCore.summary(s) : null;
+    document.getElementById('meta').textContent = m ? t('Catalogue v' + s.meta.catalogue_version + ' · ' + m.meanings + ' meanings · Flow 1 ready ' + m.flow1_ready + ' · Flow 2 ready ' + m.flow2_ready + (BinaStore.storageAvailable() ? '' : ' · storage blocked in this view'), 'الكتالوج v' + s.meta.catalogue_version + ' · ' + m.meanings + ' معنى · التدفق الأول جاهز ' + m.flow1_ready + ' · التدفق الثاني جاهز ' + m.flow2_ready) : '';
+  }
+  document.getElementById('lang').addEventListener('click', function () { lang = lang === 'ar' ? 'en' : 'ar'; try { localStorage.setItem(KEY, JSON.stringify({ lang: lang })); } catch (e) { } render(); });
+  // The two workbooks are built here from the seed catalogue with the same code and options as
+  // tools/make-catalogue-files.js, so the preview does not need to host .xlsx files.
+  function loadScript(src) {
+    return new Promise(function (res, rej) {
+      if (document.querySelector('script[data-lazy="' + src + '"]')) return res();
+      var s = document.createElement('script'); s.charset = 'utf-8'; s.src = src; s.setAttribute('data-lazy', src);
+      s.onload = function () { res(); }; s.onerror = function () { s.remove(); rej(new Error('load ' + src)); };
+      document.head.appendChild(s);
+    });
+  }
+  function buildWorkbook(kind) {
+    var FIXED = Date.parse('2026-11-08T00:00:00Z');
+    return loadScript('vendor/exceljs.min.js').then(function () { return loadScript('shared/bina-xlsx.js'); })
+      .then(function () { return fetch('prototype_data/bina_demo_catalogue.json'); })
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function (state) { return BinaXlsx.toBuffer(BinaXlsx.buildWorkbook(window.ExcelJS, state, kind === 'tpl' ? { template: true, now: FIXED } : { now: FIXED, exportedBy: 'prototype seed' })); })
+      .then(function (buf) { return new Blob([buf], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }); });
+  }
+  function getFile(f) {
+    if (f[3]) return buildWorkbook(f[3]);
+    return fetch(f[0]).then(function (r) { if (!r.ok) throw new Error(r.status); return r.blob(); });
+  }
+  document.getElementById('files').addEventListener('click', function (e) {
+    var b = e.target.closest('button[data-i]'); if (!b) return;
+    var f = FILES[+b.getAttribute('data-i')], name = f[0].split('/').pop();
+    getFile(f).then(function (blob) { return BinaProviders.Files.save(name, blob); }).then(function (res) {
+      if (res.ok) toast(t('Saved ' + name, 'تم الحفظ: ' + name)); else if (res.error.code !== 'declined') toast(res.error.message);
+    }).catch(function () { toast(t('Could not load ' + name, 'تعذر تحميل ' + name)); });
+  });
+  document.getElementById('reset').addEventListener('click', function () {
+    var d = document.createElement('div'); d.className = 'dlg'; d.setAttribute('role', 'dialog'); d.setAttribute('aria-modal', 'true');
+    d.innerHTML = '<div><p><b>' + esc(t('Reset the demo catalogue?', 'إعادة الكتالوج التجريبي؟')) + '</b></p><p class="note">' + esc(t('Edits, imports and uploads made in this browser are removed. The files in prototype_data stay as they are.', 'تُحذف التعديلات والاستيرادات والملفات المرفوعة في هذا المتصفح فقط.')) + '</p><div class="row"><button class="btn primary" data-a="yes" type="button">' + esc(t('Reset', 'إعادة')) + '</button><button class="btn ghost" data-a="no" type="button">' + esc(t('Cancel', 'إلغاء')) + '</button></div></div>';
+    document.body.appendChild(d); d.querySelector('[data-a="no"]').focus();
+    d.addEventListener('click', function (ev) { var a = ev.target.getAttribute('data-a'); if (a === 'yes') BinaStore.reset().then(function () { toast(t('Demo data restored', 'تمت إعادة البيانات')); meta(); }); if (a || ev.target === d) d.remove(); });
+    d.addEventListener('keydown', function (ev) { if (ev.key === 'Escape') d.remove(); });
+  });
+  if (window.BinaStore) BinaStore.on(meta);
+  var mq = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+  function logo() { var dark = document.documentElement.getAttribute('data-theme') === 'dark' || (!document.documentElement.getAttribute('data-theme') && mq && mq.matches); document.getElementById('logo').src = 'shared/brand/bina-logo-white.png'; return dark; }
+  logo();
+  render();
+})();
+</script>

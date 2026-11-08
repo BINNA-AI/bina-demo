@@ -1,0 +1,20 @@
+﻿meaning_id,semantic_hints,avatar_asset_id,avatar_file,enabled,review_status,rights_status,version
+WATER,مويه | موية | مية | أبغى مويه | air@ms,,,TRUE,approved,demo_only,1
+THANK_YOU,مشكور | يعطيك العافية | شكرا | thanks@en | terima kasih@ms,,,TRUE,approved,demo_only,1
+HELP,ساعدني | أبي مساعدة | فزعة | tolong@ms,,,TRUE,approved,demo_only,1
+DOCTOR,دكتور | الدكتور | doktor@ms,AVA_DOCTOR_001,DOCTOR_avatar.mp4,TRUE,approved,demo_only,1
+RESTROOM,حمام | toilet@en | tandas@ms,,,TRUE,pending,demo_only,1
+SALAM,سلام | السلام عليكم | سلام عليكم | مرحبا | هلا | salam@ms | hello@en,AVA_SALAM_001,SALAM_avatar.mp4,TRUE,approved,demo_only,1
+MOTHER,أمي | يمه | الوالدة | mom@en | mum@en | ibu@ms | emak@ms,AVA_MOTHER_001,MOTHER_avatar.mp4,TRUE,approved,demo_only,1
+GOING_HOME,أبي أروح البيت | بروح البيت | راجع البيت | go home@en | balik rumah@ms,AVA_GOING_HOME_001,GOING_HOME_avatar.mp4,TRUE,approved,demo_only,1
+FRIDAY,يوم الجمعة | جمعة | jumaat@ms,AVA_FRIDAY_001,FRIDAY_avatar.mp4,TRUE,approved,demo_only,1
+NUMBER_22,22 | اثنين وعشرين | twenty two@en | dua puluh dua@ms,AVA_NUMBER_22_001,NUMBER_22_avatar.mp4,TRUE,approved,demo_only,1
+NUMBER_33,33 | ثلاثة وثلاثين | thirty three@en | tiga puluh tiga@ms,AVA_NUMBER_33_001,NUMBER_33_avatar.mp4,TRUE,approved,demo_only,1
+NUMBER_44,44 | أربعة وأربعين | forty four@en | empat puluh empat@ms,AVA_NUMBER_44_001,NUMBER_44_avatar.mp4,TRUE,approved,demo_only,1
+NUMBER_80,80 | ثمانين | eighty@en | lapan puluh@ms,AVA_NUMBER_80_001,NUMBER_80_avatar.mp4,TRUE,approved,demo_only,1
+GRADUATE,تخرجت | تخرج | graduation@en | graduan@ms,AVA_GRADUATE_001,GRADUATE_avatar.mp4,TRUE,approved,demo_only,1
+JUST_KIDDING,أمزح | أمزح معك | بس أمزح | gurau@ms,AVA_JUST_KIDDING_001,JUST_KIDDING_avatar.mp4,TRUE,approved,demo_only,1
+PRESIDENT,الرئيس | presiden@ms,AVA_PRESIDENT_001,PRESIDENT_avatar.mp4,TRUE,approved,demo_only,1
+PURPLE,موف | لون بنفسجي | ungu@ms,AVA_PURPLE_001,PURPLE_avatar.mp4,TRUE,approved,demo_only,1
+SOY_SAUCE,صويا | صوص الصويا | soya sauce@en | kicap@ms,AVA_SOY_SAUCE_001,SOY_SAUCE_avatar.mp4,TRUE,approved,demo_only,1
+VERY_CLEAR,واضح | مره واضح | clear@en | sangat jelas@ms,AVA_VERY_CLEAR_001,VERY_CLEAR_avatar.mp4,TRUE,approved,demo_only,1

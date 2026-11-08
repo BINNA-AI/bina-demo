@@ -1,0 +1,22 @@
+﻿meaning_id,canonical_ar,canonical_en,category,enabled,lifecycle,version
+SALAM,السلام عليكم,Peace be upon you,greeting,TRUE,active,1
+WATER,ماء,Water,daily,TRUE,active,1
+THANK_YOU,شكرًا,Thank you,greeting,TRUE,active,1
+HELP,مساعدة,Help,emergency,TRUE,active,1
+YES,نعم,Yes,daily,TRUE,active,1
+RESTROOM,دورة مياه,Restroom,daily,TRUE,active,1
+FOOD,طعام,Food,food,TRUE,draft,1
+DOCTOR,طبيب,Doctor,health,TRUE,active,1
+FRIDAY,الجمعة,Friday,daily,TRUE,active,1
+GOING_HOME,الرجوع إلى البيت,Going home,daily,TRUE,active,1
+GRADUATE,خرّيج,Graduate,other,TRUE,active,1
+JUST_KIDDING,أمزح فقط,Just kidding,daily,TRUE,active,1
+MOTHER,أم,Mother,family,TRUE,active,1
+NUMBER_22,اثنان وعشرون,Twenty-two,numbers,TRUE,active,1
+NUMBER_33,ثلاثة وثلاثون,Thirty-three,numbers,TRUE,active,1
+NUMBER_44,أربعة وأربعون,Forty-four,numbers,TRUE,active,1
+NUMBER_80,ثمانون,Eighty,numbers,TRUE,active,1
+PRESIDENT,رئيس,President,other,TRUE,active,1
+PURPLE,بنفسجي,Purple,colors,TRUE,active,1
+SOY_SAUCE,صلصة الصويا,Soy sauce,food,TRUE,active,1
+VERY_CLEAR,واضح جدًا,Very clear,daily,TRUE,active,1

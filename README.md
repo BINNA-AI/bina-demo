@@ -1,0 +1,1 @@
+BINA prototype demo. Demo data only, no keys, no live services. The 15 avatar clips are TalkBIM collaboration references for demo only, not production approved. Source: private repo BINNA-AI/bina-platform (prototype/).

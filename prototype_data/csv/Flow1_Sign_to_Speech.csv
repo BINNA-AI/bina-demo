@@ -1,0 +1,7 @@
+﻿meaning_id,cv_class,arabic_audio_asset_id,arabic_audio_file,english_audio_asset_id,english_audio_file,enabled,review_status,version
+SALAM,SALAM,AUD_SALAM_AR_001,SALAM_ar-SA.mp3,AUD_SALAM_EN_001,SALAM_en.mp3,TRUE,approved,1
+WATER,WATER,AUD_WATER_AR_001,WATER_ar-SA.mp3,AUD_WATER_EN_001,WATER_en.mp3,TRUE,approved,1
+THANK_YOU,THANK_YOU,AUD_THANK_YOU_AR_001,THANK_YOU_ar-SA.mp3,AUD_THANK_YOU_EN_001,THANK_YOU_en.mp3,TRUE,approved,1
+HELP,HELP,AUD_HELP_AR_001,HELP_ar-SA.mp3,AUD_HELP_EN_001,HELP_en.mp3,TRUE,approved,1
+YES,YES,AUD_YES_AR_001,YES_ar-SA.mp3,AUD_YES_EN_001,YES_en.mp3,TRUE,approved,1
+RESTROOM,RESTROOM,AUD_RESTROOM_AR_001,RESTROOM_ar-SA.mp3,,,TRUE,approved,1
